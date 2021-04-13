@@ -1,52 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Board from "./components/board/Board";
 import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/SideBar";
 import Welcome from "./components/welcome/Welcome";
-import useGame from "./hooks/useGame";
-
-const gameInit = {
-  displayMode: false,
-  colors: [],
-  score: 0,
-  userPicksMode: false,
-};
+import { GlobalContext } from "./context/GlobalContext";
 
 export default function App() {
-  const [userName, setNewUser] = useState("");
+  const { username, setUsername, handleStartGame } = useContext(GlobalContext);
+  const handleUserName = (userName) => setUsername(userName);
 
-  const handleUserName = (userName) => setNewUser(userName);
-
-  const {
-    bulbClickHandle,
-    handleStartGame,
-    play,
-    flashColor,
-    gameOver,
-    handleGameReset,
-  } = useGame(gameInit);
-
-  return !userName ? (
+  return !username ? (
     <Welcome
       handleUserName={handleUserName}
       handleStartGame={handleStartGame}
     />
   ) : (
     <>
-      <Header
-        handleGameReset={handleGameReset}
-        gameOver={gameOver}
-        score={play.score}
-        userName={userName}
-      />
+      <Header />
       <div
         style={{
           display: "flex",
           gridGap: "10px",
         }}
       >
-        <SideBar score={play.score} />
-        <Board bulbClickHandle={bulbClickHandle} flashColor={flashColor} />
+        <SideBar />
+        <Board />
       </div>
     </>
   );

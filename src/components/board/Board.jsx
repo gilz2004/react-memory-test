@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 import { colors } from "../../utils/colors";
 import Bulb from "../bulb/Bulb";
 import { boardStyle } from "./board.styles";
 
-export default function Board({ bulbClickHandle, flashColor }) {
+export default function Board() {
+  const { flashColor, bulbClickHandle } = useContext(GlobalContext);
   return (
     <div style={boardStyle}>
       {colors &&

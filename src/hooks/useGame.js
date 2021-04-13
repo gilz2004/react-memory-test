@@ -42,10 +42,10 @@ export default function useGame(gameInit) {
   }, [gameOn, displayMode, gameOver]);
 
   useEffect(() => {
-    if (gameOn && displayMode && colors.length) {
+    if (displayMode && colors.length) {
       displayColors();
     }
-  }, [gameOn, displayMode, play.colors.length, displayColors]);
+  }, [displayMode, play.colors.length, displayColors]);
 
   const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

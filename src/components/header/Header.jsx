@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export default function Header({ userName, handleGameReset, gameOver }) {
+export default function Header() {
+  const { username, handleGameReset, gameOver } = useContext(GlobalContext);
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>{`Welcome ${userName} `}</h1>
+      <h1 style={{ textAlign: "center" }}>{`Welcome ${username} `}</h1>
       {gameOver ? <p style={gameOverStyle}>Game over </p> : null}
       <button style={btnStyle} onClick={handleGameReset}>
         start again

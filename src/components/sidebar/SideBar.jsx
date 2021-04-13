@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export default function SideBar({ score }) {
+export default function SideBar() {
+  const {
+    play: { score },
+  } = useContext(GlobalContext);
   //list of scores
 
   return (
