@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import { colors } from "../utils/colors";
 import { makeRandomNumber } from "../utils/utils";
 
 const totalBulbs = 6;
 const roundSuccessScore = 10;
 
-export default function useGame(colors, gameInit) {
+export default function useGame(gameInit) {
   const [gameOn, setGameOn] = useState(false);
   const [play, setPlay] = useState(gameInit);
   const [flashColor, setFlashColor] = useState("");
   const [gameOver, setGameOver] = useState(false);
+
+  const { userColors, userPicksMode, displayMode, score } = play;
 
   useEffect(() => {
     if (gameOn) {
@@ -19,18 +22,18 @@ export default function useGame(colors, gameInit) {
   }, [gameOn, gameOver]);
 
   useEffect(() => {
-    if (gameOn && play.displayMode) {
+    if (gameOn && displayMode) {
       let randomNumber = makeRandomNumber(totalBulbs);
       let newColor = colors[randomNumber];
       setPlay({ ...play, colors: [...play.colors, newColor] });
     }
-  }, [gameOn, play.displayMode]);
+  }, [gameOn, displayMode]);
 
   useEffect(() => {
-    if (gameOn && play.displayMode && play.colors.length) {
+    if (gameOn && displayMode && colors.length) {
       displayColors();
     }
-  }, [gameOn, play.displayMode, play.colors.length]);
+  }, [gameOn, displayMode, play.colors.length]);
 
   const displayColors = async () => {
     await timeout(1500);
@@ -59,8 +62,8 @@ export default function useGame(colors, gameInit) {
     setGameOn(true);
   };
   const bulbClickHandle = async (color) => {
-    if (!play.displayMode && play.userPicksMode) {
-      const copyUserColors = [...play.userColors];
+    if (!displayMode && userPicksMode) {
+      const copyUserColors = [...userColors];
       const lastColor = copyUserColors.shift();
       setFlashColor(color);
 
@@ -78,7 +81,7 @@ export default function useGame(colors, gameInit) {
             displayMode: true,
             userPicksMode: false,
             userColors: [],
-            score: play.score + roundSuccessScore,
+            score: score + roundSuccessScore,
           });
         }
       } else {

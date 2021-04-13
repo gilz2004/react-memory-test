@@ -4,7 +4,6 @@ import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/SideBar";
 import Welcome from "./components/welcome/Welcome";
 import useGame from "./hooks/useGame";
-import { colors } from "./utils/colors";
 
 const gameInit = {
   displayMode: false,
@@ -25,7 +24,7 @@ export default function App() {
     flashColor,
     gameOver,
     handleGameReset,
-  } = useGame(colors, gameInit);
+  } = useGame(gameInit);
 
   return !userName ? (
     <Welcome
