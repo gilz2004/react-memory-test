@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export default function Welcome({ handleUserName, handleStartGame }) {
+export default function Welcome() {
+  const { setUsername, handleStartGame } = useContext(GlobalContext);
+
   const [username, setUserName] = useState("");
   const [err, setError] = useState("");
   const handleSubmit = (e) => {
@@ -10,7 +13,7 @@ export default function Welcome({ handleUserName, handleStartGame }) {
       return;
     }
 
-    handleUserName(username);
+    setUsername(username);
     handleStartGame();
   };
 

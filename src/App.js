@@ -6,23 +6,14 @@ import Welcome from "./components/welcome/Welcome";
 import { GlobalContext } from "./context/GlobalContext";
 
 export default function App() {
-  const { username, setUsername, handleStartGame } = useContext(GlobalContext);
-  const handleUserName = (userName) => setUsername(userName);
+  const { username } = useContext(GlobalContext);
 
   return !username ? (
-    <Welcome
-      handleUserName={handleUserName}
-      handleStartGame={handleStartGame}
-    />
+    <Welcome />
   ) : (
     <>
       <Header />
-      <div
-        style={{
-          display: "flex",
-          gridGap: "10px",
-        }}
-      >
+      <div style={mainStyle}>
         <SideBar />
         <Board />
       </div>
@@ -30,6 +21,10 @@ export default function App() {
   );
 }
 
+const mainStyle = {
+  display: "flex",
+  gridGap: "10px",
+};
 // todo: add layout component
 
 //todo : make global context state ,add user name as part of this context and the game logic
