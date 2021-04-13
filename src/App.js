@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Board from "./components/board/Board";
+import Header from "./components/header/Header";
+import SideBar from "./components/sidebar/SideBar";
+import Welcome from "./components/welcome/Welcome";
+import useGame from "./hooks/useGame";
+import { colors } from "./utils/colors";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const gameInit = {
+  displayMode: false,
+  colors: [],
+  score: 0,
+  userPicksMode: false,
+};
+
+export default function App() {
+  const [userName, setNewUser] = useState("");
+
+  const handleUserName = (userName) => setNewUser(userName);
+
+  const {
+    bulbClickHandle,
+    handleStartGame,
+    play,
+    flashColor,
+    gameOver,
+    handleGameReset,
+  } = useGame(colors, gameInit);
+
+  return !userName ? (
+    <Welcome
+      handleUserName={handleUserName}
+      handleStartGame={handleStartGame}
+    />
+  ) : (
+    <>
+      <Header
+        handleGameReset={handleGameReset}
+        gameOver={gameOver}
+        score={play.score}
+        userName={userName}
+      />
+      <div
+        style={{
+          display: "flex",
+          gridGap: "10px",
+        }}
+      >
+        <SideBar score={play.score} />
+        <Board bulbClickHandle={bulbClickHandle} flashColor={flashColor} />
+      </div>
+    </>
   );
 }
 
-export default App;
+// todo: add layout component
+//todo : make global context state ,add user name as part of this context and the game logic
