@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { colors } from "../utils/colors";
 import { makeRandomNumber } from "../utils/utils";
+import useLocalStorage from "./useLocalStorage";
 
 const totalBulbs = 6;
 const roundSuccessScore = 10;
 
-export default function useGame(gameInit) {
+export default function useGame(gameInit, username) {
+  const [usersData, scoreToLocalStorage] = useLocalStorage("users");
+
   const [gameOn, setGameOn] = useState(false);
   const [play, setPlay] = useState(gameInit);
   const [flashColor, setFlashColor] = useState("");
@@ -85,6 +88,9 @@ export default function useGame(gameInit) {
       } else {
         setGameOn(false);
         setGameOver(true);
+        //todo : make a separate function for this
+        let storageData = usersData ? usersData : [];
+        scoreToLocalStorage([...storageData, { username, score }]);
       }
       setFlashColor("");
     }

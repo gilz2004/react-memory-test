@@ -12,6 +12,8 @@ const gameInit = {
 
 export default function GameContext({ children }) {
   const [username, setUsername] = useState("");
+  const [userDate, setUserDate] = useState(new Date());
+
   const {
     bulbClickHandle,
     handleStartGame,
@@ -19,7 +21,8 @@ export default function GameContext({ children }) {
     flashColor,
     gameOver,
     handleGameReset,
-  } = useGame(gameInit);
+  } = useGame(gameInit, username);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -31,6 +34,7 @@ export default function GameContext({ children }) {
         handleGameReset,
         username,
         setUsername,
+        userDate,
       }}
     >
       {children}

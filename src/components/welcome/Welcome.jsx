@@ -3,9 +3,9 @@ import { GlobalContext } from "../../context/GlobalContext";
 
 export default function Welcome() {
   const { setUsername, handleStartGame } = useContext(GlobalContext);
-
   const [username, setUserName] = useState("");
   const [err, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username) {
