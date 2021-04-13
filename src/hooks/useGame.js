@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { colors } from "../utils/colors";
 import { makeRandomNumber } from "../utils/utils";
 
@@ -13,29 +13,7 @@ export default function useGame(gameInit) {
 
   const { userColors, userPicksMode, displayMode, score } = play;
 
-  useEffect(() => {
-    if (gameOn) {
-      setPlay({ ...play, displayMode: true });
-    } else {
-      setPlay(play);
-    }
-  }, [gameOn, gameOver]);
-
-  useEffect(() => {
-    if (gameOn && displayMode) {
-      let randomNumber = makeRandomNumber(totalBulbs);
-      let newColor = colors[randomNumber];
-      setPlay({ ...play, colors: [...play.colors, newColor] });
-    }
-  }, [gameOn, displayMode]);
-
-  useEffect(() => {
-    if (gameOn && displayMode && colors.length) {
-      displayColors();
-    }
-  }, [gameOn, displayMode, play.colors.length]);
-
-  const displayColors = async () => {
+  const displayColors = useCallback(async () => {
     await timeout(1500);
     for (let i = 0; i < play.colors.length; i++) {
       setFlashColor(play.colors[i]);
@@ -50,14 +28,34 @@ export default function useGame(gameInit) {
         });
       }
     }
-  };
+  }, [play]);
+
+  useEffect(() => {
+    if (gameOn && displayMode) {
+      let randomNumber = makeRandomNumber(totalBulbs);
+      let newColor = colors[randomNumber];
+      setPlay((prevPlay) => ({
+        ...prevPlay,
+        colors: [...prevPlay.colors, newColor],
+      }));
+    }
+  }, [gameOn, displayMode, gameOver]);
+
+  useEffect(() => {
+    if (gameOn && displayMode && colors.length) {
+      displayColors();
+    }
+  }, [gameOn, displayMode, play.colors.length, displayColors]);
 
   const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  const handleStartGame = () => setGameOn(true);
+  const handleStartGame = () => {
+    setPlay({ ...play, displayMode: true });
+    setGameOn(true);
+  };
 
   const handleGameReset = () => {
-    setPlay(gameInit);
+    setPlay({ ...gameInit, displayMode: true });
     setGameOver(false);
     setGameOn(true);
   };
