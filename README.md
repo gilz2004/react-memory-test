@@ -5,6 +5,6 @@ And the second one *refactor* with all the game requirements, including localSto
 
 The *refacor* is much *better* and more polished branch, the preferred one to checkout.
 
-Didn't want to merge them because i did a little break from coding after the initial results has been send, when i noticed that not all requestes been fulfilled. Sorry about that.
+Merge done.
 
 Thank you.
