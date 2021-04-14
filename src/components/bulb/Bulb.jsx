@@ -8,7 +8,7 @@ export default function Bulb({ color, onClick, flash }) {
         cursor: "pointer",
         border: "2px solid black",
         borderRadius: "50%",
-        background: flash ? color : "white",
+        background: flash ? color : "none",
         width: "100px",
         height: "100px",
       }}
