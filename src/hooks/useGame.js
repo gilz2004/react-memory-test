@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { colors } from "../utils/colors";
 import { makeRandomNumber } from "../utils/utils";
 import useLocalStorage from "./useLocalStorage";
